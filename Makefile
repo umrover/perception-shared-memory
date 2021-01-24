@@ -1,18 +1,18 @@
 CC=g++
 CFLAGS=-g -Wall
 
-write: write
+write: write.o
 	$(CC) $(CFLAGS) -o write write.o
 
-read: read
+read: read.o
 	$(CC) $(CFLAGS) -o read read.o
 
-write.o: write.cpp shared_memory.cpp shared_memory.hpp
-	$(CC) $(CFLAGS) -c write.cpp shared_memory.hpp shared_memory.cpp
+write.o: shared_memory.hpp
+	$(CC) $(CFLAGS) -c write.cpp shared_memory.hpp
 
-read.o: read.cpp shared_memory.cpp shared_memory.hpp
-	$(CC) $(CFLAGS) -c read.cpp shared_memory.hpp shared_memory.cpp
+read.o: shared_memory.hpp
+	$(CC) $(CFLAGS) -c read.cpp shared_memory.hpp
 
 clean:
-	rm *.out *.o
-	rm -rf *.dSYM
+	rm *.o *.gch
+	rm -rf a.out.dSYM
