@@ -1,40 +1,31 @@
-#include "shared_memory.h"
+#include "shared_memory.hpp"
 
-#define IPC_RESULT_ERROR (-1)
-
-static int get_shared_block(char *filename, int size) {
-    key_t key;
-    key = ftok(filename, 0);
-    if(key == IPC_RESULT_ERROR) {
-        return IPC_RESULT_ERROR;
-    }
-    return shmget(key, size, 0644 | IPC_CREAT);
+void publish_ptr(void *ptr, char* filename, int block_size, int block_id) {
+    key_t key = ftok(filename, block_id); 
+  
+    // shmget returns an identifier in shmid 
+    int shmid = shmget(key, block_size, 0666 | IPC_CREAT);
+  
+    // shmat to attach to shared memory 
+    void *pointer = shmat(shmid, (void*)0, 0); 
+  
+    pointer = ptr;
+      
+    //detach from shared memory  
+    shmdt(pointer); 
 }
 
-char * attach_memory_block(char *filename, int size) {
-    int id = get_shared_block(filename, size);
-    void *result;
-
-    if(id == IPC_RESULT_ERROR) {
-        return NULL;
-    }
-
-    result = shmat(id, NULL, 0);
-    if(result == (char *)IPC_RESULT_ERROR) {
-        return NULL;
-    }
-    return (char *)result;
-}
-
-bool detach_memory_block(char *block) {
-    return (shmdt(block) != IPC_RESULT_ERROR);
-}
-
-bool destroy_memory_block(char *filename) {
-    int id = get_shared_block(filename, 0);
-
-    if(id == IPC_RESULT_ERROR) {
-        return NULL;
-    }
-    return (shmctl(id, IPC_RMID, NULL) != IPC_RESULT_ERROR);
+void *read_ptr(char* filename, int block_size, int block_id) {
+    // ftok to generate unique key 
+    key_t key = ftok(filename, block_id); 
+  
+    // shmget returns an identifier in shmid 
+    int shmid = shmget(key, block_size, 0666 | IPC_CREAT); 
+  
+    // shmat to attach to shared memory 
+    void *pointer = shmat(shmid,(void*)0,0); 
+      
+    //detach from shared memory  
+    shmdt(pointer); 
+    return pointer;
 }

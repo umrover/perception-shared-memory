@@ -1,13 +1,11 @@
 #include <iostream> 
 #include <sys/ipc.h> 
 #include <sys/shm.h> 
-#include <stdio.h> 
 using namespace std; 
   
-int main() 
-{ 
+int main() { 
     // ftok to generate unique key 
-    key_t key = ftok("shmfile",65); 
+    key_t key = ftok("shmfile",64); 
   
     // shmget returns an identifier in shmid 
     int shmid = shmget(key,1024,0666|IPC_CREAT); 

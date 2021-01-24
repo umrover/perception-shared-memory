@@ -1,15 +1,7 @@
-#include <cstring>
-#include <iostream>
-#include <sys/shm.h>
+#include <iostream> 
+#include <sys/ipc.h> 
+#include <sys/shm.h> 
 
-#define IPC_RESULT_ERROR (-1)
-#define FILENAME "shmfile"
-#define BLOCK_SIZE 1024
+void publish_ptr(void *ptr, char* filename, int block_size, int block_id);
 
-static int get_shared_block(char *filename, int size);
-
-char * attach_memory_block(char *filename, int size);
-
-bool detach_memory_block(char *block);
-
-bool destroy_memory_block(char *filename);
+void *read_ptr(char* filename, int block_size, int block_id);
