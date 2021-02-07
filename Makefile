@@ -14,5 +14,5 @@ read.o: shared_memory.hpp
 	$(CC) $(CFLAGS) -c read.cpp shared_memory.hpp
 
 clean:
-	rm *.o *.gch
+	rm read write *.o *.gch
 	rm -rf a.out.dSYM
