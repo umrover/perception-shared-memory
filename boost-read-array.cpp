@@ -14,10 +14,13 @@ int main(int argc, char *argv[]) {
     mapped_region region(shm, read_only);
 
     //Check that memory was initialized to 1
-    vector<int> *mem = new vector<int>();
-    mem = static_cast<std::vector<int> *>(region.get_address());
-    //printf("%d", *mem);
-    std::cout << mem->at(0) << std::endl;
+    int *mem;
+    mem = static_cast<int *>(region.get_address());
+    printf("%d", *mem);
+    std::cout << " ";
+    printf("%d", *(mem + 1));
+    std::cout << " ";
+    printf("%d", *(mem + 2));
     shared_memory_object::remove("MySharedMemory");
     return 0;
 }
