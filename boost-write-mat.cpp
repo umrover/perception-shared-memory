@@ -14,13 +14,13 @@ int main() {
     //Create a shared memory object.
     shared_memory_object shm (create_only, "SharedMat", read_write);
 
+    Size mat_size = image.size();
+    int mem_size = 3 * mat_size.width * mat_size.height;
     //Set size
-    shm.truncate(50000000);
+    shm.truncate(mem_size);
 
     //Map the whole shared memory in this process
     mapped_region region(shm, read_write);
-
-    //std::memcpy(region.get_address(), image.ptr(), image.channels()*image.rows*image.cols);
 
     if(image.isContinuous()) {
         std::memcpy(region.get_address(), image.ptr(), image.channels()*image.rows*image.cols);
