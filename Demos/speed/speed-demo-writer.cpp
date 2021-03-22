@@ -34,7 +34,7 @@ while(true) {
 	if(value) value = 0;
 	else value = 1;
 for(int i = 0; i <= 20; ++i) {
-    //sleep(3);
+    sleep(1);
     //arr[i] = value;
     std::memcpy(static_cast<int*>(region.get_address())+i, &value, region.get_size());
     std::cout << "writing " << value << " to index " << i << std::endl;

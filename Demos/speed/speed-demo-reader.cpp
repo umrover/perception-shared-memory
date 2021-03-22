@@ -20,6 +20,7 @@ while(true){
         //while(current == old) {
             current = *(mem + i);
         //}
+	sleep(0.5);
         if(current) std::cout << "Index " << i << " changed to: "<<current<<", moving on" << std::endl;
     }
 }
