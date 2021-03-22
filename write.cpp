@@ -5,7 +5,7 @@ using namespace std;
 
 int main() { 
    int *ptr;
-   int data = 1234;
+   int data = 1232;
    ptr = &data;
    int block_size = 1024;
    int block_id = 64;

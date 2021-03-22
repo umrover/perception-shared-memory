@@ -13,13 +13,14 @@ int main(int argc, char *argv[]) {
 
     int *mem;
     mem = static_cast<int *>(region.get_address());
-
+while(true){
     for(int i = 0; i <= 20; ++i) {
         int old = 0;
         int current = 0;
-        while(current == old) {
+        //while(current == old) {
             current = *(mem + i);
-        }
-        std::cout << "Index " << i << " changed, moving on" << std::endl;
+        //}
+        if(current) std::cout << "Index " << i << " changed to: "<<current<<", moving on" << std::endl;
     }
+}
 }

@@ -1,7 +1,8 @@
 #include <iostream> 
 #include <sys/ipc.h> 
 #include <sys/shm.h> 
-
+#include <cstring>
+#include <cstdint>
 template <class T>
 void publish_ptr(T *ptr, char* filename, int block_size, int block_id) {
     key_t key = ftok(filename, block_id); 
@@ -12,7 +13,7 @@ void publish_ptr(T *ptr, char* filename, int block_size, int block_id) {
     // shmat to attach to shared memory 
     T *pointer = (T*) shmat(shmid, (void*)0, 0); 
     
-    memcpy(pointer, ptr, sizeof(ptr));
+    std::memcpy(pointer, ptr, sizeof(ptr));
       
     //detach from shared memory  
     shmdt(pointer); 

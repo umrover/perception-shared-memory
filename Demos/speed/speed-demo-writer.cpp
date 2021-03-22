@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 
 int arr[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-int value = 1;
+int value = 0;
 
 shared_memory_object::remove("DemoArr");
 
@@ -30,11 +30,14 @@ sleep(10);
 
 std::cout << "Starting to overwrite..." << std::endl;
 
+while(true) {
+	if(value) value = 0;
+	else value = 1;
 for(int i = 0; i <= 20; ++i) {
-    sleep(3);
-    arr[i] = value;
-    std::memcpy(static_cast<int*>(region.get_address())+i, arr+i, region.get_size());
+    //sleep(3);
+    //arr[i] = value;
+    std::memcpy(static_cast<int*>(region.get_address())+i, &value, region.get_size());
     std::cout << "writing " << value << " to index " << i << std::endl;
 }
-
+}
 }
